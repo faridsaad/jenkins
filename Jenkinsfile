@@ -33,7 +33,7 @@ spec:
 """
   ) {
 
-  node(POD_LABEL) {
+  node('test-pod') {
     stage('Build with Kaniko') {
       git 'https://github.com/jenkinsci/docker-jnlp-slave.git'
       container('kaniko') {
