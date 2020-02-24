@@ -33,9 +33,9 @@ spec:
 """
   ) {
 
-  node(POD_LABEL) {
+  node('testpod') {
     stage('Build with Kaniko') {
-      git 'https://github.com/jenkinsci/docker-jnlp-slave.git'
+      /* git 'https://github.com/jenkinsci/docker-jnlp-slave.git' */
       container('kaniko') {
         sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=faridsaad/myimage'
       }
