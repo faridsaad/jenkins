@@ -35,7 +35,7 @@ spec:
 
   node('testpod') {
     stage('Build with Kaniko') {
-      /* git 'https://github.com/jenkinsci/docker-jnlp-slave.git' */
+      git 'https://github.com/faridsaad/jenkins.git'
       container('kaniko') {
         sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=faridsaad/myimage'
       }
