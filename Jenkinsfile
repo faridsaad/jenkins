@@ -39,7 +39,7 @@ spec:
       git 'https://github.com/faridsaad/jenkins.git'
       container('kaniko') {
         sh '/busybox/cat /kaniko/.docker/config.json'
-        sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=faridsaad/myimage:1'
+        sh '/kaniko/executor --verbosity=debug -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=faridsaad/myimage:1'
       }
     }
   }
