@@ -21,6 +21,9 @@ spec:
     volumeMounts:
       - name: jenkins-docker-cfg
         mountPath: /kaniko/.docker
+    env:
+    - name: DOCKER_CONFIG
+      value: /kaniko/.docker/
   volumes:
   - name: jenkins-docker-cfg
     projected:
