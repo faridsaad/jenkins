@@ -23,7 +23,7 @@ spec:
         mountPath: /kaniko/.docker
     env:
     - name: DOCKER_CONFIG
-      value: /kaniko
+      value: /kaniko/.docker
   volumes:
   - name: jenkins-docker-cfg
     secret:
