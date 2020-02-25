@@ -37,7 +37,7 @@ spec:
     stage('Build with Kaniko') {
       git 'https://github.com/faridsaad/jenkins.git'
       container('kaniko') {
-        sh '/bin/cat /kaniko/.docker/config.json'
+        sh '/busybox/cat /kaniko/.docker/config.json'
         sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=gcr.io/farid-172616/myimage --verbosity=debug'
       }
     }
