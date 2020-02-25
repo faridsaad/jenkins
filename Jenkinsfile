@@ -21,6 +21,11 @@ spec:
     volumeMounts:
       - name: jenkins-docker-cfg
         mountPath: /kaniko/.docker
+      - name: kaniko-secret
+        mountPath: /secret
+    env:
+      - name: GOOGLE_APPLICATION_CREDENTIALS
+        value: /secret/kaniko-secret.json
   volumes:
   - name: jenkins-docker-cfg
     projected:
@@ -30,6 +35,9 @@ spec:
           items:
             - key: .dockerconfigjson
               path: config.json
+  - name: kaniko-secret
+    secret:
+      secretName: kaniko-secret
 """
   ) {
 
@@ -37,7 +45,6 @@ spec:
     stage('Build with Kaniko') {
       git 'https://github.com/faridsaad/jenkins.git'
       container('kaniko') {
-        sh '/busybox/cat /kaniko/.docker/config.json'
         sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=gcr.io/farid-172616/myimage --verbosity=debug'
       }
     }
