@@ -34,14 +34,22 @@ spec:
 """
   ) {
 
+  def getDockerTag(){
+    def tag = sh script: 'git rev-parse HEAD', returnStdout: true
+    return tag
+  }
+
+  environment {
+     DOCKER_TAG = getDockerTag()
+  }
+
   node(POD_LABEL) {
     stage('Build with Kaniko') {
       git 'https://github.com/faridsaad/jenkins.git'
       container('kaniko') {
         sh '/busybox/cat /kaniko/.docker/config.json'
-        sh '/kaniko/executor --verbosity=debug -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=faridsaad/myimage:1'
+        sh '/kaniko/executor --verbosity=debug -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=faridsaad/myimage:${DOCKER_TAG}'
       }
     }
   }
 }
-
