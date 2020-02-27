@@ -26,6 +26,11 @@ spec:
     env:
       - name: GOOGLE_APPLICATION_CREDENTIALS
         value: /secret/kaniko-secret.json
+  - name: debug
+    image: busybox
+    command:
+    - /bin/sleep
+    - 3600
   volumes:
   - name: jenkins-docker-cfg
     projected:
