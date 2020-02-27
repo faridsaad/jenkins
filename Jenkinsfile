@@ -37,10 +37,6 @@ spec:
 
     node(POD_LABEL) {
 
-    def getDockerTag(){
-      def tag = sh script: 'git rev-parse HEAD', returnStdout: true
-      return tag
-    }
 
     environment {
        DOCKER_TAG = getDockerTag()
@@ -55,4 +51,8 @@ spec:
 
     }
   }
+    def getDockerTag(){
+      def tag = sh script: 'git rev-parse HEAD', returnStdout: true
+      return tag
+    }
 }
