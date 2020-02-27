@@ -46,7 +46,7 @@ spec:
       git 'https://github.com/faridsaad/jenkins.git'
       container('kaniko') {
         sh '/busybox/cat /secret/kaniko-secret.json'
-        sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=gcr.io/farid-172616/myimage'
+        sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --verbosity=debug --destination=gcr.io/farid-172616/myimage'
       }
     }
   }
