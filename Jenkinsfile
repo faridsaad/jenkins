@@ -45,7 +45,7 @@ spec:
     stage('Build with Kaniko') {
       git 'https://github.com/faridsaad/jenkins.git'
       container('kaniko') {
-        sh '/busybox/cat /secret/kaniko-secret.json'
+        sh '/busybox/cat ${GOOGLE_APPLICATION_CREDENTIALS}'
         sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --verbosity=debug --destination=gcr.io/farid-172616/myimage'
       }
     }
