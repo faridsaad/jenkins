@@ -19,15 +19,18 @@ spec:
     - /busybox/cat
     tty: true
     volumeMounts:
-      - name: kaniko-secret
-        mountPath: /secret
+      - name: jenkins-docker-cfg
+        mountPath: /kaniko/.docker
     env:
-      - name: GOOGLE_APPLICATION_CREDENTIALS
-        value: /secret/kaniko-secret.json
+    - name: DOCKER_CONFIG
+      value: /kaniko/.docker
   volumes:
-  - name: kaniko-secret
+  - name: jenkins-docker-cfg
     secret:
-      secretName: kaniko-secret
+      secretName: regcred
+      items:
+      - key: .dockerconfigjson
+        path: config.json
 """
   ) {
 
@@ -35,9 +38,8 @@ spec:
     stage('Build with Kaniko') {
       git 'https://github.com/faridsaad/jenkins.git'
       container('kaniko') {
-        // sh '/busybox/cat ${GOOGLE_APPLICATION_CREDENTIALS}'
-        // sh '/busybox/sleep 3600'
-        sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --verbosity=debug --destination=gcr.io/farid-172616/myimage'
+        sh '/busybox/cat /kaniko/.docker/config.json'
+        sh '/kaniko/executor --verbosity=debug -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=faridsaad/myimage:1'
       }
     }
   }
