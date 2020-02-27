@@ -13,7 +13,7 @@ kind: Pod
 spec:
   containers:
   - name: kaniko
-    image: gcr.io/kaniko-project/executor:debug-fb0cfd74649f88a942c0a77c85136b791a9c09d1
+    image: gcr.io/kaniko-project/executor:latest
     imagePullPolicy: Always
     command:
     - /busybox/cat
@@ -45,8 +45,8 @@ spec:
     stage('Build with Kaniko') {
       git 'https://github.com/faridsaad/jenkins.git'
       container('kaniko') {
-        sh '/busybox/cat ${GOOGLE_APPLICATION_CREDENTIALS}'
-        sh '/busybox/sleep 3600'
+        // sh '/busybox/cat ${GOOGLE_APPLICATION_CREDENTIALS}'
+        // sh '/busybox/sleep 3600'
         sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --verbosity=debug --destination=gcr.io/farid-172616/myimage'
       }
     }
