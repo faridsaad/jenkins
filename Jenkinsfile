@@ -13,7 +13,7 @@ kind: Pod
 spec:
   containers:
   - name: kaniko
-    image: gcr.io/kaniko-project/executor:debug-539ddefcae3fd6b411a95982a830d987f4214251
+    image: gcr.io/kaniko-project/executor:debug-a1af057f997316bfb1c4d2d82719d78481a02a79
     imagePullPolicy: Always
     command:
     - /busybox/cat
@@ -21,16 +21,23 @@ spec:
     volumeMounts:
       - name: jenkins-docker-cfg
         mountPath: /kaniko/.docker
+      - name: kaniko-secret
+        mountPath: /secret
     env:
-    - name: DOCKER_CONFIG
-      value: /kaniko/.docker
+      - name: GOOGLE_APPLICATION_CREDENTIALS
+        value: /secret/kaniko-secret.json
   volumes:
   - name: jenkins-docker-cfg
+    projected:
+      sources:
+      - secret:
+          name: regcred
+          items:
+            - key: .dockerconfigjson
+              path: config.json
+  - name: kaniko-secret
     secret:
-      secretName: regcred
-      items:
-      - key: .dockerconfigjson
-        path: config.json
+      secretName: kaniko-secret
 """
   ) {
 
@@ -38,8 +45,7 @@ spec:
     stage('Build with Kaniko') {
       git 'https://github.com/faridsaad/jenkins.git'
       container('kaniko') {
-        sh '/busybox/cat /kaniko/.docker/config.json'
-        sh '/kaniko/executor --verbosity=debug -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=faridsaad/myimage:1'
+        sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=gcr.io/farid-172616/myimage'
       }
     }
   }
