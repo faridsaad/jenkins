@@ -26,11 +26,6 @@ spec:
     env:
       - name: GOOGLE_APPLICATION_CREDENTIALS
         value: /secret/kaniko-secret.json
-  - name: debug
-    image: busybox
-    command:
-    - /bin/sleep
-    - 3600
   volumes:
   - name: jenkins-docker-cfg
     projected:
@@ -51,6 +46,7 @@ spec:
       git 'https://github.com/faridsaad/jenkins.git'
       container('kaniko') {
         sh '/busybox/cat ${GOOGLE_APPLICATION_CREDENTIALS}'
+        sh '/busybox/sleep 3600'
         sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --verbosity=debug --destination=gcr.io/farid-172616/myimage'
       }
     }
