@@ -19,22 +19,12 @@ spec:
     - /busybox/cat
     tty: true
     volumeMounts:
-      - name: jenkins-docker-cfg
-        mountPath: /kaniko/.docker
       - name: kaniko-secret
         mountPath: /secret
     env:
       - name: GOOGLE_APPLICATION_CREDENTIALS
         value: /secret/kaniko-secret.json
   volumes:
-  - name: jenkins-docker-cfg
-    projected:
-      sources:
-      - secret:
-          name: regcred
-          items:
-            - key: .dockerconfigjson
-              path: config.json
   - name: kaniko-secret
     secret:
       secretName: kaniko-secret
