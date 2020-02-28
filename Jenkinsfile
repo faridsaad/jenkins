@@ -42,7 +42,7 @@ spec:
       }
       git 'https://github.com/faridsaad/jenkins.git'
       container('jnlp'){
-        DOCKER_TAG = sh script: 'git rev-parse HEAD', returnStdout: true
+        def DOCKER_TAG = sh script: 'git rev-parse HEAD', returnStdout: true
       }
 
       container('kaniko') {
