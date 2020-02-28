@@ -41,6 +41,7 @@ spec:
       environment {
         DOCKER_TAG = """${sh(script: 'git rev-parse HEAD', returnStdout: true)}"""
       }
+      sh 'echo ${DOCKER_TAG}"'
       git 'https://github.com/faridsaad/jenkins.git'
       container('kaniko') {
         sh '/busybox/cat /kaniko/.docker/config.json'
