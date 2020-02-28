@@ -39,20 +39,18 @@ spec:
 
     stage('Build with Kaniko') {
       environment {
-        DOCKER_TAG = """${sh(script: 'git rev-parse HEAD', returnStdout: true)}"""
       }
-      sh 'echo ${DOCKER_TAG}'
       git 'https://github.com/faridsaad/jenkins.git'
       container('kaniko') {
-        sh '/busybox/cat /kaniko/.docker/config.json'
-        sh 'printenv'
         sh '/kaniko/executor --verbosity=debug -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=faridsaad/myimage:${DOCKER_TAG}'
+        sh '/busybox/sleep 3600'
       }
 
     }
   }
 }
 
+//         DOCKER_TAG = """${sh(script: 'git rev-parse HEAD', returnStdout: true)}"""
     def getDockerTag(){
       def tag = sh script: 'git rev-parse HEAD', returnStdout: true
       return tag
