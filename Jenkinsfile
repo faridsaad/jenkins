@@ -39,7 +39,7 @@ spec:
 
     stage('Build with Kaniko') {
       environment {
-        DOCKER_TAG = getDockerTag()
+        DOCKER_TAG = """${sh(script: 'git rev-parse HEAD', returnStdout: true)}"""
       }
       git 'https://github.com/faridsaad/jenkins.git'
       container('kaniko') {
