@@ -37,12 +37,10 @@ spec:
 
     node(POD_LABEL) {
 
-
-    environment {
-       DOCKER_TAG = getDockerTag()
-    }
-
     stage('Build with Kaniko') {
+      environment {
+        DOCKER_TAG = getDockerTag()
+      }
       git 'https://github.com/faridsaad/jenkins.git'
       container('kaniko') {
         sh '/busybox/cat /kaniko/.docker/config.json'
