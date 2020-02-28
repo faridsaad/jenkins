@@ -41,6 +41,10 @@ spec:
       environment {
       }
       git 'https://github.com/faridsaad/jenkins.git'
+      container('jnlp'){
+        sh 'git rev-parse HEAD'
+      }
+
       container('kaniko') {
         sh '/kaniko/executor --verbosity=debug -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=faridsaad/myimage:${DOCKER_TAG}'
         sh '/busybox/sleep 3600'
