@@ -41,8 +41,8 @@ spec:
       environment {
       }
       git 'https://github.com/faridsaad/jenkins.git'
+      def DOCKER_TAG = sh script: 'git rev-parse HEAD', returnStdout: true
       container('jnlp'){
-        def DOCKER_TAG = sh script: 'git rev-parse HEAD', returnStdout: true
         sh "echo \${DOCKER_TAG}"
       }
         echo "\${DOCKER_TAG}"
