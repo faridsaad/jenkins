@@ -45,7 +45,7 @@ spec:
         def DOCKER_TAG = sh script: 'git rev-parse HEAD', returnStdout: true
         sh "echo \${DOCKER_TAG}"
       }
-        echo "${DOCKER_TAG}"
+        echo "\${DOCKER_TAG}"
         sh "echo \${DOCKER_TAG}"
 
       container('kaniko') {
