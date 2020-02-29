@@ -46,7 +46,7 @@ spec:
         sh "echo \${DOCKER_TAG}"
       }
         echo "${DOCKER_TAG}"
-        sh "echo \${DOCKER_TAG}"
+        sh "echo ${DOCKER_TAG}"
 
       container('kaniko') {
         sh "/kaniko/executor --verbosity=debug -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=faridsaad/myimage:\${DOCKER_TAG}"
