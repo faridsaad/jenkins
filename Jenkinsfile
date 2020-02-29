@@ -45,7 +45,7 @@ spec:
       container('jnlp'){
         sh "echo \${DOCKER_TAG}"
       }
-        echo "\${DOCKER_TAG}"
+        echo "${DOCKER_TAG}"
         sh "echo \${DOCKER_TAG}"
 
       container('kaniko') {
