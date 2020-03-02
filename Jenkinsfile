@@ -53,6 +53,11 @@ spec:
       }
 
     }
+
+    stage('Deploy app') {
+        kubernetesDeploy(configs: "myapp.yaml", kubeconfigId: "jenkins-kubeconfig")
+    }
+
   }
 }
 
