@@ -55,7 +55,7 @@ spec:
     }
 
     stage('Deploy app') {
-        kubernetesDeploy(configs: "myapp.yaml", kubeconfigId: "jenkins-kubeconfig")
+        kubernetesDeploy(configs: "*.yaml", kubeconfigId: "jenkins-kubeconfig")
     }
 
   }
