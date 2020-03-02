@@ -21,7 +21,7 @@ spec:
         run: myapp
     spec:
       containers:
-      - image: nginx:latest
+      - image: faridsaad/myapp:latest
         imagePullPolicy: Always
         name: myapp
         resources: {}
