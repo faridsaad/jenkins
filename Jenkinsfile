@@ -58,6 +58,10 @@ spec:
         kubernetesDeploy(configs: "*.yaml", kubeconfigId: "jenkins-kubeconfig")
     }
 
+    stage('Test app') {
+        httpRequest consoleLogResponseBody: true, responseHandle: 'NONE', url: 'http://myapp.default.svc.cluster.local', validResponseContent: 'Hello'
+    }
+
   }
 }
 
