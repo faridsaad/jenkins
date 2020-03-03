@@ -21,7 +21,7 @@ spec:
         run: myapp
     spec:
       containers:
-      - image: faridsaad/myapp:latest
+      - image: faridsaad/myimage:latest
         imagePullPolicy: Always
         name: myapp
         resources: {}
