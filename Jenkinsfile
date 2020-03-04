@@ -42,7 +42,9 @@ spec:
       }
 
       git 'https://github.com/faridsaad/jenkins.git'
+
       def DOCKER_TAG = sh script: 'git rev-parse HEAD', returnStdout: true
+      sh "echo ${DOCKER_TAG} > commit-id.txt"
 
       container('kaniko') {
         sh "/kaniko/executor --verbosity=debug -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=faridsaad/myimage:${DOCKER_TAG}"
@@ -51,6 +53,7 @@ spec:
     }
 
     stage('Deploy app') {
+        DOCKER_TAG= readFile('commit-id.txt').trim()
         sh "echo ${DOCKER_TAG}"
         kubernetesDeploy(configs: "*.yaml", kubeconfigId: "jenkins-kubeconfig", enableConfigSubstitution: true)
     }
