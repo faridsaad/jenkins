@@ -51,6 +51,7 @@ spec:
     }
 
     stage('Deploy app') {
+        sh "echo ${DOCKER_TAG}"
         kubernetesDeploy(configs: "*.yaml", kubeconfigId: "jenkins-kubeconfig", enableConfigSubstitution: true)
     }
 
