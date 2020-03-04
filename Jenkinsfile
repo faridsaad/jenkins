@@ -54,7 +54,7 @@ spec:
 
     stage('Deploy app') {
         DOCKER_TAG= readFile('commit-id.txt').trim()
-        sh "echo ${DOCKER_TAG}"
+        sh "echo Tag - ${DOCKER_TAG}"
         kubernetesDeploy(configs: "*.yaml", kubeconfigId: "jenkins-kubeconfig", enableConfigSubstitution: true)
     }
 
