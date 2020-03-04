@@ -46,6 +46,7 @@ spec:
       def DOCKER_TAG = sh script: 'git rev-parse HEAD', returnStdout: true
       sh "echo Tag1 - ${DOCKER_TAG}"
       sh "echo ${DOCKER_TAG} > commit-id.txt"
+      sh 'cat commit-id.txt'
 
       container('kaniko') {
         sh "/kaniko/executor --verbosity=debug -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=faridsaad/myimage:${DOCKER_TAG}"
