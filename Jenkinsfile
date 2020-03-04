@@ -44,6 +44,7 @@ spec:
       git 'https://github.com/faridsaad/jenkins.git'
 
       def DOCKER_TAG = sh script: 'git rev-parse HEAD', returnStdout: true
+      sh "echo Tag1 - ${DOCKER_TAG}"
       sh "echo ${DOCKER_TAG} > commit-id.txt"
 
       container('kaniko') {
@@ -53,8 +54,8 @@ spec:
     }
 
     stage('Deploy app') {
-        DOCKER_TAG= readFile('commit-id.txt').trim()
-        sh "echo Tag - ${DOCKER_TAG}"
+        DOCKER_TAG = readFile('commit-id.txt').trim()
+        sh "echo Tag2 - ${DOCKER_TAG}"
         kubernetesDeploy(configs: "*.yaml", kubeconfigId: "jenkins-kubeconfig", enableConfigSubstitution: true)
     }
 
